@@ -39,10 +39,12 @@ class OsuApi:
                 continue
             if '?' not in self.uri:
                 self.uri += '?'
-            if '&' in self.uri and not self.uri.endswith('&'):
+            if not self.uri.endswith(('&', '?',)):
                 self.uri += f'&'
-            self.uri += f'{q}={params[q]}'
-
+            if q == 'cursor':
+                self.uri += params[q]
+            else:
+                self.uri += f'{q}={params[q]}'
         return self
 
     def add_json(self, params: Dict, *fields) -> 'OsuApi':
