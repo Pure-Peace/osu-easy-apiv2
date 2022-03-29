@@ -7,9 +7,6 @@ RequestType = Literal['get', 'post', 'head',
                       'options', 'put', 'patch', 'delete']
 
 
-ACCESS_TOKEN: str = try_get_authorization_token()['access_token']
-
-AUTH_HEADER = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 JSON_REQ_HEADER = {'Content-Type: application/json',
                    'Accept: application/json'}
 
@@ -17,14 +14,17 @@ JSON_REQ_HEADER = {'Content-Type: application/json',
 class OsuApi:
     uri: str
     json_data: Optional[Dict] = None
+    auth_header: Optional[Dict] = None
 
     def __init__(self, uri: str) -> None:
         self.uri = uri
+        self.auth_header = {
+            'Authorization': f'Bearer {try_get_authorization_token()["access_token"]}'}
 
     def send(self, request_type: RequestType = 'get') -> Dict:
-        headers = AUTH_HEADER
+        headers = self.auth_header
         if request_type == 'post':
-            headers |= AUTH_HEADER
+            headers |= JSON_REQ_HEADER
         return requests.request(request_type, f'https://osu.ppy.sh/api/v2/{self.uri}', headers=headers, json=self.json_data).json()
 
     def get(self) -> Dict:

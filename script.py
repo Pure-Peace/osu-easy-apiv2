@@ -6,7 +6,7 @@ from osu_create_pm import osu_create_pm
 
 
 """ rankings = []
-for page in range(1, 7):
+for page in range(7, 9):
     print('page', page)
     rankings += osu_ranking('osu', 'performance', country='CN',
                             cursor=f'cursor[page]={page}')['ranking']
@@ -34,6 +34,6 @@ for ranking in rankings:
     print(num, username, user_id, pp, rank)
     try:
         print(osu_create_pm(user_id, msg))
-        time.sleep(1.5)
+        time.sleep(0.5)
     except Exception as err:
         print(err)
