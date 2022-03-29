@@ -79,15 +79,12 @@ def get_authorization_code() -> str:
 
 
 def try_get_authorization_code(refresh=False) -> str:
-    if refresh:
-        return get_authorization_code()
-    try:
+    if not refresh and os.path.isfile(cfg.code_file):
         with open(cfg.code_file) as f:
             if len(code := f.read()) > 10:
                 return code
-            raise RuntimeError('Invalid authorization code')
-    except:
-        return get_authorization_code()
+
+    return get_authorization_code()
 
 
 def get_authorization_code_by_oauth():
@@ -128,17 +125,14 @@ def get_authorization_token(code: str) -> OauthToken:
 def try_get_authorization_token(refresh=False) -> OauthToken:
     if refresh:
         return get_authorization_token(try_get_authorization_code(refresh=True))
-    try:
-        with open('osu_token.json') as f:
-            if len(code := f.read()) < 10:
-                raise RuntimeError('Invalid authorization token')
 
-            token: OauthToken = json.loads(code)
-            if int(time()) - token['expires_in'] > token['request_time']:
-                return get_authorization_token(try_get_authorization_code())
-            return token
-    except:
-        return get_authorization_token(try_get_authorization_code())
+    if os.path.isfile('osu_token.json'):
+        with open('osu_token.json') as f:
+            token: OauthToken = json.loads(f.read())
+            if int(time()) - token['expires_in'] <= token['request_time']:
+                return token
+
+    return get_authorization_token(try_get_authorization_code())
 
 
 if __name__ == '__main__':

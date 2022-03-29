@@ -16,7 +16,8 @@ def osu_ranking(
     spotlight: Optional[str] = None,
     variant: Optional[str] = None
 ):
-    return OsuApi(f'rankings/{mode}/{ranking_type}', locals()).add_queries(
+    return OsuApi(f'rankings/{mode}/{ranking_type}').add_queries(
+        locals(),
         'country', 'cursor', 'filter', 'spotlight', 'variant').send()
 
 
