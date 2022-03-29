@@ -1,0 +1,11 @@
+{
+    "code_file": "authorization_code",
+    "redirect_port": 22021,
+    "redirect_path": "/callback",
+    "client_id": 13726,
+    "client_secret": "xxxx",
+    "scopes": [
+        "chat.write",
+        "public"
+    ]
+}
