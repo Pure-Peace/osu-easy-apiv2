@@ -7,8 +7,8 @@ RequestType = Literal['get', 'post', 'head',
                       'options', 'put', 'patch', 'delete']
 
 
-JSON_REQ_HEADER = {'Content-Type: application/json',
-                   'Accept: application/json'}
+JSON_REQ_HEADER = {'Content-Type': 'application/json',
+                   'Accept': 'application/json'}
 
 
 class OsuApi:

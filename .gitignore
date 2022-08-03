@@ -3,3 +3,4 @@ config.json
 osu_token.json
 authorization_code
 ranking.json
+done.json
