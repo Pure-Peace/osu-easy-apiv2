@@ -1,8 +1,6 @@
 import json
-from textwrap import indent
 import time
-from turtle import done
-from osu_ranking import osu_ranking, get_ranking_with_pages
+from osu_ranking import get_ranking_with_pages
 from osu_create_pm import osu_create_pm
 
 
